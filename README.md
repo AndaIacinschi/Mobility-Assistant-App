@@ -2,6 +2,7 @@
 #  Mobility Assistant App – Real-Time Fall Detection System
 
 This project implements a complete system for real-time fall detection and emergency alerting, specifically designed to support people with mobility impairments, such as elderly users or patients recovering from trauma. It combines motion sensor monitoring on iOS devices, real-time data processing via a secure backend, and an easy-to-use web dashboard for dispatcher coordination. When a potential fall is detected, the application immediately initiates a short voice interaction with the user to confirm their status. The system automatically sends an alert containing the user’s status and real-time location to the dispatcher platform ensuring rapid intervention in critical situations.
+
 ---
 
 ##  Project Structure

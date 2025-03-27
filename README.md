@@ -1,10 +1,6 @@
 
 #  Mobility Assistant App – Real-Time Fall Detection System
 
-![iOS](https://img.shields.io/badge/platform-iOS-blue)
-![React](https://img.shields.io/badge/frontend-React.js-61DAFB?logo=react)
-![Flask](https://img.shields.io/badge/backend-Flask-yellow?logo=flask)
-
 This project implements a complete system for real-time fall detection and emergency alerting, specifically designed to support people with mobility impairments, such as elderly users or patients recovering from trauma. It combines motion sensor monitoring on iOS devices, real-time data processing via a secure backend, and an easy-to-use web dashboard for dispatcher coordination. When a potential fall is detected, the application immediately initiates a short voice interaction with the user to confirm th...
 
 ---

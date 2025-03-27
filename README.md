@@ -1,5 +1,5 @@
 
-# 🛠 Mobility Assistant App – Real-Time Fall Detection System
+#  Mobility Assistant App – Real-Time Fall Detection System
 
 ![iOS](https://img.shields.io/badge/platform-iOS-blue)
 ![React](https://img.shields.io/badge/frontend-React.js-61DAFB?logo=react)
@@ -9,7 +9,7 @@ This project implements a complete system for real-time fall detection and emerg
 
 ---
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 mobility-assistant-app/
@@ -23,7 +23,7 @@ mobility-assistant-app/
 
 ---
 
-## 📱 Mobile Client (Swift – iOS)
+##  Mobile Client (Swift – iOS)
 
 **Sensor Input**: Uses `CoreMotion` to track accelerometer data and detect sudden impact events.
 
@@ -45,7 +45,7 @@ mobility-assistant-app/
 
 ---
 
-## 🧠 Backend API (Python – Flask)
+##  Backend API (Python – Flask)
 
 **Frameworks**: Flask, Flask-SocketIO, Flask-Migrate, Flask-JWT-Extended
 
@@ -64,7 +64,7 @@ mobility-assistant-app/
 
 ---
 
-## 🌐 Web Platform (React.js)
+##  Web Platform (React.js)
 
 **Architecture**: Component-based layout with real-time WebSocket hooks
 
@@ -83,7 +83,7 @@ mobility-assistant-app/
 
 ---
 
-## 🔐 Security Model
+##  Security Model
 
 **Authentication**: Stateless sessions using `JWT`
 
@@ -97,7 +97,7 @@ mobility-assistant-app/
 
 ---
 
-## 🧪 Test Strategy
+##  Test Strategy
 
 **Mobile**:
 - Manual test cases and simulator scenarios
@@ -112,7 +112,7 @@ mobility-assistant-app/
 
 ---
 
-## 📡 How the Alert System Works
+##  How the Alert System Works
 
 1. The iOS app detects a fall
 2. Sends data via secure POST to backend
@@ -121,7 +121,7 @@ mobility-assistant-app/
 
 ---
 
-## 👩‍💻 Author
+##  Author
 
 **Iacinschi Anda-Roxana**  
 Bachelor of Engineering – Computer Systems  

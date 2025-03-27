@@ -1,19 +1,22 @@
 # Mobility Assistant App – Real-Time Fall Detection System
 
-![iOS](https://img.shields.io/badge/platform-iOS-blue)
-![React](https://img.shields.io/badge/frontend-React.js-61DAFB?logo=react)
-![Flask](https://img.shields.io/badge/backend-Flask-yellow?logo=flask)
-
 This project implements a complete system for real-time fall detection and emergency alerting, specifically designed to support people with mobility impairments, such as elderly users or patients recovering from trauma. It combines motion sensor monitoring on iOS devices, real-time data processing via a secure backend, and an easy-to-use web dashboard for dispatcher coordination. When a potential fall is detected, the application immediately initiates a short voice interaction with the user to confirm their status. The system automatically sends an alert containing the user’s status and real-time location to the dispatcher platform ensuring rapid intervention in critical situations.
 
-# Project Structure
+---
+
+## 📁 Project Structure
+
+```
 mobility-assistant-app/
 ├── mobile-app/         # iOS application (Swift)
 ├── web-platform/       # React.js frontend for dispatcher dashboard
 ├── docs/               # Thesis PDF & Presentation
 └── README.md
+```
 
-Note: Backend logic is integrated within the mobile and web apps. The iOS app handles data processing and API communication natively, while the web dashboard includes both frontend and Flask-based backend functionality for real-time monitoring and alert management.
+> Note: Backend logic is integrated within the mobile and web apps. The iOS app handles data processing and API communication natively, while the web dashboard includes both frontend and Flask-based backend functionality.
+
+---
 
 #  Mobile Client (Swift – iOS)
 **Sensor Input**: Uses CoreMotion to track accelerometer data and detect sudden impact events.

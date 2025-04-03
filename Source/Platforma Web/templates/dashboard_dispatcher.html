@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Dispecerat</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="/static/styles.css"> 
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('dashboard_dispatcher') }}">Dashboard</a></li>
+                <li><a href="{{ url_for('pacienti_logati') }}">Pacienți Logați</a></li>
+                <li><a href="{{ url_for('logout') }}">Deconectare</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Conținutul hărții -->
+    <div id="map-container">
+        <div id="map"></div>
+    </div>
+
+    <!-- Elementul modal pentru notificări -->
+    <div id="notification-modal" class="modal">
+        <div class="modal-content">
+            <span id="close-notification-modal" class="close">&times;</span>
+            <h2>Impact Detectat!</h2>
+            <p id="notification-details"></p>
+            <div id="notification-map" style="height: 300px;"></div>
+            <button id="close-notification-button">Închide</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+
+    <script>
+        // Inițializează harta centrată pe România
+        var map = L.map('map').setView([45.9432, 24.9668], 7);
+
+        // Adaugă straturile de hartă de la OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18,
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Funcția pentru adăugarea markerelor pe hartă cu iconiță personalizată
+        function addMarker(latitude, longitude, details) {
+            var icon = L.icon({
+                iconUrl: '/static/ambulace_b.png', // Calea corectă către imagine
+                iconSize: [30, 30], // Ajustează dimensiunea markerului
+                iconAnchor: [15, 30], // Punctul din marker care indică locația exactă
+                popupAnchor: [0, -30] // Punctul din care apare pop-up-ul relativ la marker
+            });
+
+            var marker = L.marker([latitude, longitude], { icon: icon }).addTo(map);
+
+            // Evenimentul mouseover pentru afișarea pop-up-ului când cursorul este deasupra marker-ului
+            marker.on('mouseover', function() {
+                marker.bindPopup(details).openPopup(); 
+            });
+
+            // Închide pop-up-ul când cursorul iese de pe marker
+            marker.on('mouseout', function() {
+                marker.closePopup();
+            });
+        }
+
+        // Funcție pentru afișarea notificării în modal
+        function showNotificationModal(data) {
+            var modal = document.getElementById("notification-modal");
+            var detailsElement = document.getElementById("notification-details");
+            detailsElement.innerHTML = `
+                <strong>${data.prenume} ${data.nume}</strong><br>
+                <strong>Boala:</strong> ${data.boala}<br>
+                <strong>Telefon:</strong> ${data.telefon}<br>
+                <strong>Locație:</strong> ${data.latitude}, ${data.longitude}<br>
+                <strong>Detalii accident:</strong> ${data.details}<br>
+                <strong>Stare:</strong> ${data.stare}<br> <!-- Afișează starea pacientului -->
+            `;
+
+            modal.style.display = "block";
+
+            // Inițializează harta în modal
+            var notificationMap = L.map('notification-map').setView([data.latitude, data.longitude], 15);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 18,
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(notificationMap);
+
+            L.marker([data.latitude, data.longitude]).addTo(notificationMap);
+        }
+
+
+        // Închide modalul când se apasă pe butonul de închidere
+        document.getElementById('close-notification-button').addEventListener('click', function() {
+            document.getElementById('notification-modal').style.display = 'none';
+        });
+
+        const socket = io('http://127.0.0.1:5000');
+
+        socket.on('connect', function() {
+            console.log('Connected to Socket.IO server');
+        });
+
+        socket.on('disconnect', function() {
+            console.log('Disconnected from Socket.IO server');
+        });
+
+        socket.on('accident_alert', function(data) {
+            console.log('Received accident alert:', data);
+            showNotificationModal(data);  // Apelează funcția pentru a afișa modalul cu notificarea
+        });
+
+        // Obține datele pacienților și adaugă marker-ele pe hartă
+        fetch('/api/get-patients')
+            .then(response => response.json())
+            .then(data => {
+                data.patients.forEach(patient => {
+                    if (patient.latitude && patient.longitude) {
+                        // Pregătește detaliile care vor fi afișate în pop-up
+                        var details = `
+                            <strong>${patient.prenume} ${patient.nume}</strong><br>
+                            <strong>Boala:</strong> ${patient.boala}<br>
+                            <strong>Telefon:</strong> ${patient.telefon}<br>
+                        `;
+                        addMarker(patient.latitude, patient.longitude, details); // Adaugă markerul cu detaliile
+                    }
+                });
+            })
+            .catch(error => {
+                console.error('Eroare la obținerea datelor pacienților:', error);
+            });
+    </script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Titlul Paginii{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('dashboard_dispatcher') }}">Dashboard</a></li>
+                <li><a href="{{ url_for('pacienti_logati') }}">Pacienți Logați</a></li>
+                <li><a href="{{ url_for('logout') }}">Deconectare</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+
+    <footer>
+        <p>© Asistent Mobil</p>
+    </footer>
+</body>
+</html>

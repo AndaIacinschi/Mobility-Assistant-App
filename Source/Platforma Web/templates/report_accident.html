@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Accident</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="content">
+        <h1>Report an Accident</h1>
+        <form method="POST" action="{{ url_for('report_accident') }}">
+            <label for="latitude">Latitude:</label>
+            <input type="text" id="latitude" name="latitude" required><br><br>
+
+            <label for="longitude">Longitude:</label>
+            <input type="text" id="longitude" name="longitude" required><br><br>
+
+            <label for="details">Details:</label>
+            <textarea id="details" name="details" required></textarea><br><br>
+
+            <button type="submit">Report Accident</button>
+        </form>
+    </div>
+
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+</body>
+</html>

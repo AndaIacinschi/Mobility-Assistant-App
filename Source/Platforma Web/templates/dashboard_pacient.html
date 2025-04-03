@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Pacient</title>
+    <!-- Fonturi Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome pentru icoane -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <!-- Stiluri CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <!-- Include Socket.IO -->
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('dashboard_pacient') }}">Dashboard</a></li>
+                <li><a href="{{ url_for('logout') }}">Deconectare</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="form-container">
+        <h1>Fișa Pacientului</h1>
+        <!-- Aici începe formularul -->
+        <form method="POST" action="{{ url_for('update_profile') }}">
+            <label for="prenume">Prenume:</label>
+            <input type="text" id="prenume" name="prenume" value="{{ pacient.prenume }}" required>
+        
+            <label for="nume">Nume:</label>
+            <input type="text" id="nume" name="nume" value="{{ pacient.nume }}" required>
+        
+            <label for="data_nasterii">Data Nașterii:</label>
+            <input type="date" id="data_nasterii" name="data_nasterii" value="{{ pacient.data_nasterii }}" required>
+        
+            <label for="tara">Țară:</label>
+            <select id="tara" name="tara" required>
+                <option value="Romania" {% if pacient.tara == 'Romania' %}selected{% endif %}>România</option>
+            </select>
+        
+            <label for="judet">Județ:</label>
+            <select id="judet" name="judet" required>
+                <option value="Alba" {% if pacient.judet == 'Alba' %}selected{% endif %}>Alba</option>
+                <option value="Arad" {% if pacient.judet == 'Arad' %}selected{% endif %}>Arad</option>
+                <option value="Argeș" {% if pacient.judet == 'Argeș' %}selected{% endif %}>Argeș</option>
+                <option value="Bacău" {% if pacient.judet == 'Bacău' %}selected{% endif %}>Bacău</option>
+                <option value="Bihor" {% if pacient.judet == 'Bihor' %}selected{% endif %}>Bihor</option>
+                <option value="Bistrița-Năsăud" {% if pacient.judet == 'Bistrița-Năsăud' %}selected{% endif %}>Bistrița-Năsăud</option>
+                <option value="Botoșani" {% if pacient.judet == 'Botoșani' %}selected{% endif %}>Botoșani</option>
+                <option value="Brăila" {% if pacient.judet == 'Brăila' %}selected{% endif %}>Brăila</option>
+                <option value="Brașov" {% if pacient.judet == 'Brașov' %}selected{% endif %}>Brașov</option>
+                <option value="București" {% if pacient.judet == 'București' %}selected{% endif %}>București</option>
+                <option value="Buzău" {% if pacient.judet == 'Buzău' %}selected{% endif %}>Buzău</option>
+                <option value="Caraș-Severin" {% if pacient.judet == 'Caraș-Severin' %}selected{% endif %}>Caraș-Severin</option>
+                <option value="Călărași" {% if pacient.judet == 'Călărași' %}selected{% endif %}>Călărași</option>
+                <option value="Cluj" {% if pacient.judet == 'Cluj' %}selected{% endif %}>Cluj</option>
+                <option value="Constanța" {% if pacient.judet == 'Constanța' %}selected{% endif %}>Constanța</option>
+                <option value="Covasna" {% if pacient.judet == 'Covasna' %}selected{% endif %}>Covasna</option>
+                <option value="Dâmbovița" {% if pacient.judet == 'Dâmbovița' %}selected{% endif %}>Dâmbovița</option>
+                <option value="Dolj" {% if pacient.judet == 'Dolj' %}selected{% endif %}>Dolj</option>
+                <option value="Galați" {% if pacient.judet == 'Galați' %}selected{% endif %}>Galați</option>
+                <option value="Giurgiu" {% if pacient.judet == 'Giurgiu' %}selected{% endif %}>Giurgiu</option>
+                <option value="Gorj" {% if pacient.judet == 'Gorj' %}selected{% endif %}>Gorj</option>
+                <option value="Harghita" {% if pacient.judet == 'Harghita' %}selected{% endif %}>Harghita</option>
+                <option value="Hunedoara" {% if pacient.judet == 'Hunedoara' %}selected{% endif %}>Hunedoara</option>
+                <option value="Ialomița" {% if pacient.judet == 'Ialomița' %}selected{% endif %}>Ialomița</option>
+                <option value="Iași" {% if pacient.judet == 'Iași' %}selected{% endif %}>Iași</option>
+                <option value="Ilfov" {% if pacient.judet == 'Ilfov' %}selected{% endif %}>Ilfov</option>
+                <option value="Maramureș" {% if pacient.judet == 'Maramureș' %}selected{% endif %}>Maramureș</option>
+                <option value="Mehedinți" {% if pacient.judet == 'Mehedinți' %}selected{% endif %}>Mehedinți</option>
+                <option value="Mureș" {% if pacient.judet == 'Mureș' %}selected{% endif %}>Mureș</option>
+                <option value="Neamț" {% if pacient.judet == 'Neamț' %}selected{% endif %}>Neamț</option>
+                <option value="Olt" {% if pacient.judet == 'Olt' %}selected{% endif %}>Olt</option>
+                <option value="Prahova" {% if pacient.judet == 'Prahova' %}selected{% endif %}>Prahova</option>
+                <option value="Sălaj" {% if pacient.judet == 'Sălaj' %}selected{% endif %}>Sălaj</option>
+                <option value="Satu Mare" {% if pacient.judet == 'Satu Mare' %}selected{% endif %}>Satu Mare</option>
+                <option value="Sibiu" {% if pacient.judet == 'Sibiu' %}selected{% endif %}>Sibiu</option>
+                <option value="Suceava" {% if pacient.judet == 'Suceava' %}selected{% endif %}>Suceava</option>
+                <option value="Teleorman" {% if pacient.judet == 'Teleorman' %}selected{% endif %}>Teleorman</option>
+                <option value="Timiș" {% if pacient.judet == 'Timiș' %}selected{% endif %}>Timiș</option>
+                <option value="Tulcea" {% if pacient.judet == 'Tulcea' %}selected{% endif %}>Tulcea</option>
+                <option value="Vâlcea" {% if pacient.judet == 'Vâlcea' %}selected{% endif %}>Vâlcea</option>
+                <option value="Vaslui" {% if pacient.judet == 'Vaslui' %}selected{% endif %}>Vaslui</option>
+                <option value="Vrancea" {% if pacient.judet == 'Vrancea' %}selected{% endif %}>Vrancea</option>
+            </select>
+
+            <label for="oras">Oraș:</label>
+            <input type="text" id="oras" name="oras" value="{{ pacient.oras }}" required>
+        
+            <label for="strada">Stradă:</label>
+            <input type="text" id="strada" name="strada" value="{{ pacient.strada }}" required>
+        
+            <label for="numar">Număr:</label>
+            <input type="text" id="numar" name="numar" value="{{ pacient.numar }}" required>
+        
+            <label for="cod_postal">Cod poștal:</label>
+            <input type="text" id="cod_postal" name="cod_postal" value="{{ pacient.cod_postal }}">
+            
+            <label for="boala">Boala:</label>
+            <input type="text" id="boala" name="boala" value="{{ pacient.boala }}" required>
+        
+            <label for="medicamente">Medicamente:</label>
+            <input type="text" id="medicamente" name="medicamente" value="{{ pacient.medicamente }}" required>
+
+            <label for="telefon">Nr. Telefon</label>
+            <input type="text" id="telefon" name="telefon" value="{{ pacient.telefon }}" required>
+        
+            <label for="ultimul_incident">Ultimul incident:</label>
+            <input type="text" id="ultimul_incident" name="ultimul_incident" value="{{ pacient.ultimul_incident }}" required>
+        
+            <button type="submit">Actualizează Informațiile</button>
+        </form>
+    </div>
+
+    <script>
+        const socket = io('http://127.0.0.1:5000');
+
+        socket.on('connect', function() {
+            console.log('Connected to Socket.IO server');
+        });
+
+        socket.on('disconnect', function() {
+            console.log('Disconnected from Socket.IO server');
+        });
+    
+        socket.on('mobile_update', function (data) {
+            console.log('Received update from mobile:', data);
+            const updateElement = document.createElement('div');
+            updateElement.innerHTML = `<p>${data.patient_name}: ${data.message} (Received at ${data.timestamp})</p>`;
+            document.getElementById('updates').appendChild(updateElement);
+        });
+    </script>
+</body>
+</html>

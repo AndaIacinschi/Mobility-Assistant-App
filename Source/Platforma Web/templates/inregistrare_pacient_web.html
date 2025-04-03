@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Înregistrare Pacient</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index') }}">Acasă</a></li>
+                <li><a href="{{ url_for('inregistrare_pacient_web') }}">Înregistrare</a></li>
+                <li><a href="{{ url_for('login_dispatcher') }}">Autentificare Dispecerat</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="form-container">
+        <h1>Înregistrare Pacient</h1>
+        <form method="POST" action="{{ url_for('inregistrare_pacient_web') }}">
+            <label for="username">Nume de utilizator:</label>
+            <input type="text" id="username" name="username" required>
+            
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            
+            <label for="parola">Parolă:</label>
+            <input type="password" id="parola" name="parola" required>
+            
+            <label for="confirma_parola">Confirmă Parola:</label>
+            <input type="password" id="confirma_parola" name="confirma_parola" required>
+            
+            <button type="submit">Înregistrare</button>
+        </form>
+    </div>
+</body>
+</html>
